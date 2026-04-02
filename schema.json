@@ -1,0 +1,58 @@
+[
+  {
+    "columns": [
+      "name",
+      "sql"
+    ],
+    "values": [
+      [
+        "migration",
+        "CREATE TABLE \"migration\" (\n\t\"version\"\tINTEGER NOT NULL,\n\t\"subversion\"\tINTEGER NOT NULL,\n\t\"name\"\tTEXT NOT NULL,\n\t\"checksum\"\tTEXT NOT NULL,\n\tPRIMARY KEY(\"version\",\"subversion\")\n)"
+      ],
+      [
+        "version",
+        "CREATE TABLE \"version\" (\n\t\"version\"\tINTEGER NOT NULL UNIQUE,\n\tPRIMARY KEY(\"version\")\n)"
+      ],
+      [
+        "tool_tree_entry",
+        "CREATE TABLE \"tool_tree_entry\" (\n\t\"id\"\tTEXT NOT NULL UNIQUE,\n\t\"parent_group_id\"\tTEXT,\n\t\"sibling_order\"\tINTEGER NOT NULL,\n\t\"tool_geometry_id\"\tTEXT UNIQUE,\n\t\"name\"\tTEXT,\n\t\"notes\"\tTEXT,\n\t\"expanded\"\tINTEGER,\n\tFOREIGN KEY(\"tool_geometry_id\") REFERENCES \"tool_geometry\"(\"id\"),\n\tPRIMARY KEY(\"id\",\"parent_group_id\",\"sibling_order\"),\n\tFOREIGN KEY(\"parent_group_id\") REFERENCES \"tool_tree_entry\"(\"id\")\n)"
+      ],
+      [
+        "machine",
+        "CREATE TABLE \"machine\" (\n\t\"id\"\tTEXT NOT NULL UNIQUE,\n\t\"name\"\tTEXT NOT NULL UNIQUE,\n\t\"make\"\tTEXT,\n\t\"model\"\tTEXT,\n\t\"controller_type\"\tTEXT,\n\t\"dimensions_units\"\tINTEGER,\n\t\"max_width\"\tREAL,\n\t\"max_height\"\tREAL,\n\t\"support_rotary\"\tINTEGER,\n\t\"support_tool_change\"\tINTEGER, \"has_laser_head\" INTEGER,\n\tPRIMARY KEY(\"id\")\n)"
+      ],
+      [
+        "material",
+        "CREATE TABLE \"material\" (\n\t\"id\"\tTEXT NOT NULL UNIQUE,\n\t\"name\"\tTEXT NOT NULL UNIQUE,\n\tPRIMARY KEY(\"id\")\n)"
+      ],
+      [
+        "tool_cutting_data",
+        "CREATE TABLE \"tool_cutting_data\" (\n\t\"id\"\tTEXT NOT NULL UNIQUE,\n\t\"rate_units\"\tINTEGER NOT NULL,\n\t\"feed_rate\"\tREAL,\n\t\"plunge_rate\"\tREAL,\n\t\"spindle_speed\"\tINTEGER,\n\t\"spindle_dir\"\tINTEGER,\n\t\"stepdown\"\tREAL,\n\t\"stepover\"\tREAL,\n\t\"clear_stepover\"\tREAL,\n\t\"thread_depth\"\tREAL,\n\t\"thread_step_in\"\tREAL,\n\t\"laser_power\"\tREAL,\n\t\"laser_passes\"\tINTEGER,\n\t\"laser_burn_rate\"\tREAL,\n\t\"line_width\"\tREAL, \"length_units\" INTEGER NOT NULL DEFAULT 0, \"tool_number\" INTEGER, \"laser_kerf\" INTEGER, \"notes\" TEXT,\n\tPRIMARY KEY(\"id\")\n)"
+      ],
+      [
+        "tool_entity",
+        "CREATE TABLE \"tool_entity\" (\n\t\"id\"\tTEXT NOT NULL UNIQUE,\n\t\"material_id\"\tTEXT,\n\t\"machine_id\"\tTEXT,\n\t\"tool_geometry_id\"\tTEXT,\n\t\"tool_cutting_data_id\"\tTEXT NOT NULL,\n\tPRIMARY KEY(\"tool_geometry_id\",\"material_id\",\"machine_id\"),\n\tFOREIGN KEY(\"material_id\") REFERENCES \"material\"(\"id\"),\n\tFOREIGN KEY(\"machine_id\") REFERENCES \"machine\"(\"id\"),\n\tFOREIGN KEY(\"tool_geometry_id\") REFERENCES \"tool_geometry\"(\"id\"),\n\tFOREIGN KEY(\"tool_cutting_data_id\") REFERENCES \"tool_cutting_data\"(\"id\")\n)"
+      ],
+      [
+        "tool_name_format",
+        "CREATE TABLE \"tool_name_format\" (\n\t\"id\"\tTEXT NOT NULL,\n\t\"tool_type\"\tINTEGER NOT NULL UNIQUE,\n\t\"format\"\tTEXT NOT NULL,\n\tPRIMARY KEY(\"id\",\"tool_type\")\n)"
+      ],
+      [
+        "upload_data",
+        "CREATE TABLE \"upload_data\" (\n   \"id\" INTEGER NOT NULL UNIQUE,\n   \"date_uploaded\" INTEGER NOT NULL,\n   PRIMARY KEY(\"id\")\n)"
+      ],
+      [
+        "drill_bank_data",
+        "CREATE TABLE \"drill_bank_data\" (\n   \"id\" TEXT NOT NULL UNIQUE,\n   \"num_horizontal_drills\" INTEGER NOT NULL,\n   \"num_vertical_drills\" INTEGER NOT NULL,\n   \"drill_bank_pitch\" REAL NOT NULL,\n   \"horizontal_centre_index\" INTEGER NOT NULL,\n   \"vertical_centre_index\" INTEGER NOT NULL,\n   \"origin_index\" INTEGER NOT NULL,\n   \"supports_variable_depth\" INTEGER NOT NULL,\n   PRIMARY KEY(\"id\")\n)"
+      ],
+      [
+        "drill_bank_drill",
+        "CREATE TABLE \"drill_bank_drill\" (\n   \"id\" TEXT NOT NULL UNIQUE,\n   \"drill_bank_data_id\" TEXT NOT NULL,\n   \"global_index\" INTEGER NOT NULL,\n   \"horizontal_index\" INTEGER NOT NULL,\n   \"vertical_index\" INTEGER NOT NULL,\n   \"user_drill_number\" INTEGER NOT NULL,\n   \"on_horizontal\" INTEGER NOT NULL,\n   \"on_vertical\" INTEGER NOT NULL,\n   \"diameter\" REAL NOT NULL,\n   FOREIGN KEY(\"drill_bank_data_id\") REFERENCES \"drill_bank_data\" (\"id\"),\n   PRIMARY KEY(\"id\")\n)"
+      ],
+      [
+        "tool_geometry",
+        "CREATE TABLE \"tool_geometry\" (\n   \"id\"\tTEXT NOT NULL UNIQUE,\n   \"name_format\"\tTEXT NOT NULL,\n   \"notes\"\tTEXT,\n   \"tool_type\"\tINTEGER NOT NULL,\n   \"units\"\tINTEGER NOT NULL,\n   \"diameter\"\tREAL,\n   \"included_angle\"\tREAL,\n   \"flat_diameter\"\tREAL,\n   \"num_flutes\"\tINTEGER,\n   \"flute_length\"\tREAL,\n   \"thread_pitch\"\tREAL,\n   \"outline\"\tBLOB,\n   \"tip_radius\" REAL,\n   \"laser_watt\" INTEGER,\n   \"custom_attributes\" TEXT,\n   \"tooth_size\" REAL,\n   \"tooth_offset\" REAL,\n   \"neck_length\" REAL,\n   \"tooth_height\" REAL,\n   \"threaded_length\" REAL,\n   \"drill_bank_data_id\" TEXT,\n   FOREIGN KEY(\"drill_bank_data_id\") REFERENCES \"drill_bank_data\" (\"id\"),\n   PRIMARY KEY(\"id\")\n)"
+      ]
+    ]
+  }
+]

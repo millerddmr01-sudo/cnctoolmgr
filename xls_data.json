@@ -1,0 +1,244 @@
+[
+  [
+    null,
+    "INPUTS",
+    null,
+    "Endmill guidelines",
+    null,
+    null,
+    null,
+    null,
+    "Predefined constants"
+  ],
+  [
+    "Endmill flutes",
+    2,
+    null,
+    "Consider using an endmill with fewer flutes if computed feedrate is above machine limit",
+    null,
+    null,
+    null,
+    null,
+    "Inputs"
+  ],
+  [
+    "Endmill diameter",
+    0.25,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    "outputs"
+  ],
+  [
+    null,
+    null,
+    null,
+    "Chipload guideline",
+    null,
+    null,
+    null,
+    null,
+    "computed"
+  ],
+  [
+    null,
+    null,
+    null,
+    "Endmill",
+    "Soft plastics",
+    "Soft wood & hard plastics",
+    "Hard wood & aluminium"
+  ],
+  [
+    null,
+    null,
+    null,
+    "1/16''",
+    "0.002\" to 0.003\"",
+    "0.001\" to 0.0015\" ",
+    "0.0005\""
+  ],
+  [
+    "Target chipload",
+    0.001,
+    null,
+    "1/8''",
+    "0.002\" to 0.005\"",
+    "0.001\" to 0.0025\" ",
+    "0.0005\" to 0.001\""
+  ],
+  [
+    null,
+    null,
+    null,
+    "1/4''",
+    "0.004\" to 0.01\"",
+    "0.001\" to 0.005\"",
+    "0.001\" to 0.002\""
+  ],
+  [],
+  [
+    null,
+    null,
+    null,
+    "RPM guideline",
+    null,
+    null,
+    null,
+    "Min RPM",
+    10000,
+    "(Makita/Carbide3D: 10000, Dewalt: 16500)"
+  ],
+  [
+    "RPM",
+    12000,
+    null,
+    "Set as high as you can tolerate (noise) and feel safe using",
+    null,
+    null,
+    null,
+    "Max RPM",
+    30000,
+    "(Makita/Carbide3D: 30000, Dewalt: 27000)"
+  ],
+  [
+    null,
+    null,
+    null,
+    "Decrease if computed feedrate is above machine limit"
+  ],
+  [],
+  [
+    null,
+    null,
+    null,
+    null,
+    "WOC guideline ",
+    null,
+    null,
+    "DOC guideline"
+  ],
+  [
+    null,
+    null,
+    null,
+    null,
+    "Milling style",
+    "Toolpath type",
+    "recommended range",
+    "Milling style",
+    "Material",
+    "recommended range"
+  ],
+  [
+    "WOC",
+    0.01,
+    null,
+    null,
+    "wide and shallow for…",
+    "roughing",
+    "0.1'' to 0.25''",
+    "wide and shallow in... ",
+    "aluminium, copper, bronze",
+    "0.0125'' to 0.025''"
+  ],
+  [
+    "DOC",
+    0.1,
+    null,
+    null,
+    null,
+    "finishing",
+    "0.0125'' to 0.025''",
+    null,
+    "softer materials",
+    "0.025'' to 0.125''"
+  ],
+  [
+    null,
+    null,
+    null,
+    null,
+    "narrow and deep for…",
+    "roughing",
+    "0.025'' to 0.0625''",
+    "narrow and deep in…",
+    "all materials",
+    "0.25'' to 0.75''"
+  ],
+  [
+    null,
+    null,
+    null,
+    null,
+    null,
+    "finishing",
+    "0.0125'' to 0.025''"
+  ],
+  [
+    null,
+    "OUTPUT"
+  ],
+  [
+    "Required feedrate",
+    61.23724356957945,
+    "(includes compensation for chip thinning)",
+    null,
+    null,
+    null,
+    null,
+    "Shapeoko max feedrate",
+    196.85
+  ],
+  [],
+  [
+    null,
+    null,
+    null,
+    null,
+    "(straight) plunge rate guideline"
+  ],
+  [
+    null,
+    null,
+    null,
+    null,
+    "Material",
+    "plunge rate"
+  ],
+  [
+    "Plunge rate",
+    "<your call>",
+    null,
+    null,
+    "aluminium, copper, bronze",
+    "6 to 18 ipm"
+  ],
+  [
+    null,
+    null,
+    null,
+    null,
+    "hard wood",
+    "18 ipm"
+  ],
+  [
+    null,
+    null,
+    null,
+    null,
+    "soft woods",
+    "24 ipm"
+  ],
+  [
+    null,
+    null,
+    null,
+    null,
+    "plastics",
+    "24 to 31 ipm"
+  ]
+]

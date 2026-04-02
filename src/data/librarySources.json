@@ -1,0 +1,42 @@
+[
+  {
+    "manufacturer": "Amana",
+    "date": "12-5-2025",
+    "file": "Amana-Tool-Vectric-12-5-2025.vtdb"
+  },
+  {
+    "manufacturer": "BitsBits",
+    "date": "2026-04-02",
+    "file": "BitsBits Vectric Tool Library Complete.V2.0.vtdb"
+  },
+  {
+    "manufacturer": "CIC",
+    "date": "2026-04-02",
+    "file": "CIC_Vectric_Tool_Database_March.vtdb"
+  },
+  {
+    "manufacturer": "IDC",
+    "date": "2026-04-02",
+    "file": "IDC Woodcraft Vectric Tool Database Library Update rev 25-12.vtdb"
+  },
+  {
+    "manufacturer": "PDXCNC",
+    "date": "2026-04-02",
+    "file": "PDXCNC_VCarve-v0.1-240701 (2).vtdb"
+  },
+  {
+    "manufacturer": "SienciLabsTools",
+    "date": "2026-04-02",
+    "file": "SienciLabsTools-1.vtdb"
+  },
+  {
+    "manufacturer": "SpeTool",
+    "date": "2026-04-02",
+    "file": "SpeTool-Vectric-Tool-Files-Database-20251015.vtdb"
+  },
+  {
+    "manufacturer": "ZahyoX",
+    "date": "2026-04-02",
+    "file": "ZahyoX-Vectric-Tools-File-Database.vtdb"
+  }
+]

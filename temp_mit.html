@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<head>
+	<title>Fablab Feeds and Speeds Calculator</title>
+	<link rel="stylesheet" href="style_stuff/stylesheet.css" type="text/css">
+	<script src="style_stuff/jquery.js"></script>
+
+	<script type="text/x-mathjax-config">
+  		MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+	</script>
+
+	<script type="text/javascript" async
+  		src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+	</script>
+
+	<script>
+		function calculate_machining_parameters() {
+			var tool_diameter = parseFloat(document.getElementById("tool_diameter_input").value);
+			var surface_speed = parseFloat(document.getElementById("surface_speed_input").value);
+			var chip_load = parseFloat(document.getElementById("chip_load_input").value);
+			var flutes = parseFloat(document.getElementById("flutes_input").value);
+
+			spindle_speed = Math.round(surface_speed / (Math.PI * (1/12) * tool_diameter));
+			feed_rate = Math.round(spindle_speed * flutes * chip_load)
+			plunge_rate = feed_rate/2
+			step_over = 0.45 * tool_diameter
+			step_down = tool_diameter/2
+
+			$("#surface_speed").text(surface_speed);
+			$("#flutes").text(flutes);
+			$("#chip_load").text(chip_load);
+			$(".tool_diameter").text(tool_diameter);
+			$(".spindle_speed").text(spindle_speed);
+			$(".feed_rate").text(feed_rate);
+			$(".plunge_rate").text(plunge_rate);
+			$(".step_over").text(step_over);
+			$(".step_down").text(step_down);
+
+		}
+	</script>
+</head>
+
+<body id ="main">
+	<div id="main_padding">
+	<!--<p>It works well to first select an end mill geometry based on the geometry of your part. Then, determine your surface speed based on your end mill and the material that you will cut your part out of. This surface speed and the diameter of your end mill will allow you to calculate your spindle speed. Then, select your chip load based on what type of surface finish you want. This chip load, together with your spindle speed and the number of flutes on your end mill, will allow you to calculate your feed rate. Maybe discuss how each affects the time that the job will take?</p>-->
+
+
+<!------------------------------------------------------------------------------------------------------------------------------------------------------------------------>
+<!-----------------------------------------------------------------------------  Calculator   ------------------------------------------------------------------------->
+<!------------------------------------------------------------------------------------------------------------------------------------------------------------------------>
+
+	<h1>Fablab Speed and Feeds Calculator</h1>
+	<form action="" onsubmit="return false">
+	<table>
+		<tr> <td colspan="4" class="merged_row"><h3>1) Tool Geometry</h3></td></tr>
+		<tr> <td>Tool Diameter</td> <td> = <input type="text" name="tool_diameter" id="tool_diameter_input" style="display: inline;" /></td> 
+			<td>(inches)</td> <td><a href = parameter_explanations/diameter.html target="_blank">Details</a></td> </tr>
+		<tr> <td>Number of Flutes</td> <td> = <input type="text"  id="flutes_input" style=" display: inline;"/></td>
+			<td>(integer)</td> <td><a href = parameter_explanations/flutes.html target="_blank">Details</a></td> </tr>
+			<tr></tr><tr></tr>
+
+		<tr> <td colspan="4" class="merged_row"><h3>2) Processing Parameters (see tables below)</h3></td></tr>
+		<tr> <td>Surface Speed</td> <td> = <input type="text" name="surface_speed" id="surface_speed_input" style="display: inline;" /></td>
+			<td>(feet/min)</td> <td><a href = parameter_explanations/surfacespeed.html target="_blank">Details</a></td> </tr>
+		<tr><td>Chip Load</td> <td> = <input type="text"  id="chip_load_input" name="chip_load" style=" display: inline;" /></td>
+			<td>(inches)</td> <td><a href = parameter_explanations/chipload.html target="_blank">Details</a></td> </tr>
+			<tr></tr><tr></tr>
+
+		<tr > <td colspan="4" class="merged_row"><h3>3) &nbsp; &nbsp; &nbsp;<button class="myButton" id="tool_material_data" onclick="calculate_machining_parameters()"><h3>Calculate</h3></button></h3></td></tr>
+		<tr> <td>Spindle Speed</td> <td class="spindle_speed">output</td> 
+			<td>(rpm)</td> <td><a href = parameter_explanations/spindlespeed.html target="_blank">Details</a></td> </tr>
+		<tr> <td>XY Feed Rate</td> <td class="feed_rate">output</td> 
+			<td>(inches/min)</td> <td><a href = parameter_explanations/feedrate.html target="_blank">Details</a></td> </tr>
+		<tr> <td>Plunge (Z Feed) Rate</td> <td class="plunge_rate">output</td> 
+			<td>(inches/min)</td> <td><a href = parameter_explanations/plungerate.html target="_blank">Details</a></td> </tr>
+		<tr> <td>Stepover</td> <td class="step_over">output</td> 
+			<td>(inches)</td> <td><a href = parameter_explanations/stepover.html target="_blank">Details</a></td> </tr>
+		<tr> <td>Stepdown</td> <td class="step_down">output</td> 
+			<td>(inches)</td> <td><a href = parameter_explanations/stepdown.html target="_blank">Details</a></td> </tr>
+	</table>
+	<br><br>
+	<h2>Generic Surface Speed Reference</h2>
+	<table>
+		<tr>
+			<th class="surface_speed_table">Material</th>
+			<th class="surface_speed_table">Surface speed</th>
+			<th class="surface_speed_table">Comments</th>
+		</tr>
+		<tr>
+			<td>MDF</td>
+			<td>650 ft/min</td>
+			<
+			<td>Medium Density Fiberboard - Consider a different material if strength/weight is important. Powerful dust collection is a must, for safety.</td>
+		</tr>
+		<tr>
+			<td>OSB</td>
+			<td>650 ft/min</td>
+			<td>Oriented Strand Board - Often the most economical material to make strength/weight and stiffness/weight dependent things from, like furniture.</td>
+		</tr>
+		<tr>
+			<td>Wax</td>
+			<td>200 ft/min</td>
+			<td>Use this for prototyping a complex machining process or to make moulds for casting.</td>
+		</tr>
+		<tr>
+			<td>HDPE</td>
+			<td>450 ft/min</td>
+			<td>Softer plastic, good for prototyping or for parts that can/should be very flexible. Consider a stiffer material if you need the part to hold a thread.</td>
+		</tr>
+		<tr>
+			<td>Delrin/acetal</td>
+			<td>375 ft/min</td>
+			<td>Good all round engineering plastic, just a bit more expensive.</td>
+		</tr>
+		<tr>
+			<td>Acrylic</td>
+			<td>500 ft/min</td>
+			<td>Quite brittle, need to be more careful about cutting (use small chipload [0.002] and stepdown [0.010]), cheaper material. Water based coolant works well; if not using coolant then max surface speed is 125 ft/min.</td>
+		</tr>
+		<tr>
+			<td>Aluminium</td>
+			<td>600 ft/min</td>
+			<td>Alcohol based coolant works well; if not using coolant, then max surface speed is 200 ft/min.</td>
+		</tr>
+		<tr>
+			<td>Steel</td>
+			<td>200 ft/min</td>
+			<td>Cutting generates a lot of heat, making oil based coolant preferable. Many machining spindles require 2000 rpm or more, to provide adequate cutting torque, which means that you have to use relatively small diameter end mills in order to end up with surface speeds this low. If not using coolant, then max surface speed is 50 ft/min.</td>
+		</tr>
+		<tr>
+			<td>Insulation foam</td>
+			<td>1000 ft/min</td>
+			<td>Good for large moulds and as core for wings.</td>
+		</tr>
+			</table>
+
+
+	<h2>Chip load</h2>
+	<p>Chip loads are provided as ranges. In order to extend the life of your tool, use the lower value in the range. If need to get your job done quickly then you can a higher chipload within the specified range.</p>
+	<table>
+		<tr>
+			<th class="surface_speed_table">Material</th>
+			<th class="surface_speed_table">Tool diameter</th>
+			<th class="surface_speed_table">Chip load</th>
+			<th class="surface_speed_table">Material</th>
+			<th class="surface_speed_table">Tool diameter</th>
+			<th class="surface_speed_table">Chip load</th>
+		</tr>
+		<tr>
+			<td>MDF</td>
+			<td>1/8"<br>1/4"<br>3/8"<br>1/2" & up</td>
+			<
+			<td>.004" - .007"<br>.013" - .016"<br>.020" - .023"<br>.025" - .027"</td>
+		
+			<td>OSB</td>
+			<td>1/8"<br>1/4"<br>3/8"<br>1/2" & up</td>
+			<td>.004"-.006"<br>.011" - .013"<br>.017" - .020"<br>.021" - .023"</td>
+		</tr>
+		<tr>
+			<td>Wax</td>
+			<td>1/8"<br>1/4"<br>3/8"<br>1/2" & up</td>
+			<td>.0089" - .005"<br>.010" - .015"<br>.015" - .020"<br>.025" - .033"</td>
+		
+			<td>HDPE</td>
+			<td>1/8"<br>1/4"<br>3/8"<br>1/2" & up</td>
+			<td>.003" - .006"<br>.007" - .010"<br>.010" - .012"<br>.012" - .016"</td>
+		</tr>
+		<tr>
+			<td>Delrin/acetal</td>
+			<td>1/8"<br>1/4"<br>3/8"<br>1/2" & up</td>
+			<td>.002" - .004"<br>.006" - .009<br>.008" - .010"<br>.010" - .012"</td>
+		
+			<td>Acrylic</td>
+			<td>1/8"<br>1/4"<br>3/8"<br>1/2" & up</td>
+			<td>.003" - .005"<br>.008" - .010<br>.010" - .012"<br>.012" - .015"</td>
+		</tr>
+		<tr>
+			<td>Aluminium</td>
+			<td>1/8"<br>1/4"<br>3/8"<br>1/2" & up</td>
+			<td>.003" - .004"<br>.005" - .007"<br>.006" - .008"<br>.008" - .010"</td>
+		
+			<td>Steel</td>
+			<td>1/8"<br>1/4"<br>3/8"<br>1/2" & up</td>
+			<td>.0004" - .0008"<br>.0008" - .001"<br>.0012" - .0015"<br>.0015" - .0025"</td>
+		</tr>
+		<tr>
+			<td>Insulation foam</td>
+			<td>1/8"<br>1/4"<br>3/8"<br>1/2" & up</td>
+			<td>.004"-.006"<br>.011" - .013"<br>.017" - .020"<br>.021" - .023"</td>
+		
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+			</table>
+
+	<h2>Spindle speed</h2>
+		<div id="page">
+		    <div class="equation">
+		        
+		        <div class="lhs">
+		        	Spindle speed = ${Surface~Speed~(ft/min) \over \pi * \frac{1}{12} * Tool~Diameter~(inches)}$ = &nbsp; 
+		        </div>
+		        
+		        <div class="rhs">
+		            <span id="surface_speed">Surface speed</span>
+		            <hr>
+		            $\pi * \frac{1}{12} *$ <span class="tool_diameter">Tool Diameter</span>
+		        </div>
+		        <div class="rhs">
+		        	&nbsp; = <b><span class="spindle_speed"> &nbsp; Answer</span> rpm </b>
+		        </div>
+		    
+		    </div>
+		</div>
+
+
+	<h2>Feed rate</h2>
+		    <p>
+		      	Feed Rate = Spindle Speed (RPM) * Number of Flutes * Chip Load (inches) = <span class="spindle_speed">Spindle Speed</span> * <span id="flutes">Number of flutes</span> * <span id="chip_load">Chip Load </span> = <b><span class="feed_rate"> Answer</span> inches/min</b>
+		    </p>
+	
+
+	<h2>Plunge rate</h2>
+	<p>Use a plunge rate of 50% or less of the feed rate. So for a feed rate of <span class="feed_rate">...</span> ft/min, use a plunge rate of <b><span class="plunge_rate">...</span> ft/min</b> or less.</p>
+
+	<h2>Plunge depth and stepover</h2>
+	<p>Based on a tool diameter of <span class="tool_diameter">...</span>", use a stepover of <b><span class="step_over">...</span>"</b> or less.</p>
+
+	</form>
+</div>
+	
+</body>
