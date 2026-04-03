@@ -5,13 +5,26 @@ import librarySources from '../data/librarySources.json';
 export default function ToolLibrary({ onAdd }) {
   const [searchTerm, setSearchTerm] = useState('');
   const [showInfo, setShowInfo] = useState(false);
+  const [displayCount, setDisplayCount] = useState(60);
+
+  const handleSearchChange = (e) => {
+    setSearchTerm(e.target.value);
+    setDisplayCount(60); // Reset scroll rendering when searching
+  };
 
   const filteredTools = useMemo(() => {
     return toolsData.filter(t => 
       (t.display_name && t.display_name.toLowerCase().includes(searchTerm.toLowerCase())) ||
       (t.diameter && t.diameter.toString().includes(searchTerm))
-    ).slice(0, 60); // limit to retain ui performance
-  }, [searchTerm]);
+    ).slice(0, displayCount); 
+  }, [searchTerm, displayCount]);
+
+  const handleScroll = (e) => {
+    const { scrollTop, scrollHeight, clientHeight } = e.target;
+    if (scrollHeight - scrollTop <= clientHeight + 100) {
+      setDisplayCount(prev => prev + 60);
+    }
+  };
 
   return (
     <div className="glass-panel" style={{ height: '600px', display: 'flex', flexDirection: 'column' }}>
@@ -46,10 +59,13 @@ export default function ToolLibrary({ onAdd }) {
         type="text" 
         placeholder="Search by name, item number, or diameter..." 
         value={searchTerm}
-        onChange={e => setSearchTerm(e.target.value)}
+        onChange={handleSearchChange}
         style={{ marginBottom: '1rem', flexShrink: 0 }}
       />
-      <div style={{ overflowY: 'auto', flex: 1, paddingRight: '0.5rem' }}>
+      <div 
+        style={{ overflowY: 'auto', flex: 1, paddingRight: '0.5rem' }}
+        onScroll={handleScroll}
+      >
         {filteredTools.map((tool, i) => (
           <div key={i} style={{ padding: '0.75rem', borderBottom: '1px solid rgba(255,255,255,0.1)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <div>
