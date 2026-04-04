@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import initSqlJs from 'sql.js';
+import sqlWasm from 'sql.js/dist/sql-wasm.wasm?url';
 import ToolForm from './components/ToolForm';
 import ToolLibrary from './components/ToolLibrary';
 import ExportCart from './components/ExportCart';
@@ -26,7 +27,7 @@ function App() {
       }
       
       const SQL = await initSqlJs({
-        locateFile: file => `/${file}`
+        locateFile: () => sqlWasm
       });
     
     const db = new SQL.Database();
