@@ -35,6 +35,11 @@ function App() {
       const buffer = await response.arrayBuffer();
       const db = new SQL.Database(new Uint8Array(buffer));
     
+      const materialRes = db.exec("SELECT id FROM material LIMIT 1");
+      const machineRes = db.exec("SELECT id FROM machine LIMIT 1");
+      const materialId = (materialRes.length > 0 && materialRes[0].values.length > 0) ? materialRes[0].values[0][0] : null;
+      const machineId = (machineRes.length > 0 && machineRes[0].values.length > 0) ? machineRes[0].values[0][0] : null;
+
     const rootTreeId = crypto.randomUUID();
     db.run(`INSERT INTO tool_tree_entry (id, name, sibling_order) VALUES (?, ?, 0)`, [rootTreeId, "Exported Tools"]);
     
@@ -62,7 +67,9 @@ function App() {
         );
 
         // Entities
-        db.run(`INSERT INTO tool_entity (id, tool_geometry_id, tool_cutting_data_id) VALUES (?, ?, ?)`, [uuid, geomId, cutId]);
+        db.run(`INSERT INTO tool_entity (id, material_id, machine_id, tool_geometry_id, tool_cutting_data_id) VALUES (?, ?, ?, ?, ?)`, 
+          [uuid, materialId, machineId, geomId, cutId]
+        );
         
         // Tree
         db.run(`INSERT INTO tool_tree_entry (id, parent_group_id, tool_geometry_id, name, sibling_order) VALUES (?, ?, ?, ?, ?)`, [treeId, rootTreeId, geomId, toolName, i]);
