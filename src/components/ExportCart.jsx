@@ -1,11 +1,22 @@
 import React from 'react';
 
-export default function ExportCart({ items, onRemove, onExport }) {
+export default function ExportCart({ items, onRemove, onClear, onExport }) {
   return (
     <div className="glass-panel" style={{ display: 'flex', flexDirection: 'column', height: '600px' }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
         <h2 style={{ margin: 0 }}>Export Queue</h2>
-        <span style={{ background: 'var(--primary)', color: 'white', padding: '0.2rem 0.6rem', borderRadius: '1rem', fontSize: '0.8rem', fontWeight: 'bold' }}>{items.length}</span>
+        <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+          {items.length > 0 && (
+            <button 
+              onClick={onClear}
+              style={{ background: 'rgba(239, 68, 68, 0.2)', border: '1px solid rgba(239, 68, 68, 0.5)', color: '#ef4444', padding: '0.2rem 0.6rem', borderRadius: '0.5rem', fontSize: '0.8rem', cursor: 'pointer', transition: 'all 0.2s' }}
+              title="Clear entire queue"
+            >
+              Clear
+            </button>
+          )}
+          <span style={{ background: 'var(--primary)', color: 'white', padding: '0.2rem 0.6rem', borderRadius: '1rem', fontSize: '0.8rem', fontWeight: 'bold' }}>{items.length}</span>
+        </div>
       </div>
       
       <div style={{ overflowY: 'auto', flex: 1, marginBottom: '1rem' }}>

@@ -18,6 +18,10 @@ function App() {
   const removeFromCart = (cartId) => {
     setSelectedTools(prev => prev.filter(t => t.cartId !== cartId));
   };
+  
+  const clearCart = () => {
+    setSelectedTools([]);
+  };
 
   const exportVtdb = async () => {
     try {
@@ -107,7 +111,7 @@ function App() {
       <div className="dashboard-grid">
         <ToolLibrary onAdd={addToCart} />
         <ToolForm onAdd={addToCart} overrideData={calculatorOverrides} />
-        <ExportCart items={selectedTools} onRemove={removeFromCart} onExport={exportVtdb} />
+        <ExportCart items={selectedTools} onRemove={removeFromCart} onExport={exportVtdb} onClear={clearCart} />
       </div>
 
       <FeedSpeedCalculator onApply={setCalculatorOverrides} />
