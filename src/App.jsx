@@ -58,7 +58,7 @@ function App() {
 
         // Geometry
         db.run(`INSERT INTO tool_geometry (id, name_format, tool_type, units, diameter, num_flutes, notes) VALUES (?, ?, ?, ?, ?, ?, ?)`,
-          [geomId, "{ToolType} {Diameter} {Units}", parseInt(tool.toolType ?? tool.tool_type ?? 1), parseInt(tool.geometryUnits ?? tool.geometry_units ?? 0), parseFloat(tool.diameter ?? 0.25), parseInt(tool.numFlutes ?? tool.num_flutes ?? 2), tool.notes || '']
+          [geomId, toolName, parseInt(tool.toolType ?? tool.tool_type ?? 1), parseInt(tool.geometryUnits ?? tool.geometry_units ?? 0), parseFloat(tool.diameter ?? 0.25), parseInt(tool.numFlutes ?? tool.num_flutes ?? 2), tool.notes || '']
         );
 
         // Cutting Data
