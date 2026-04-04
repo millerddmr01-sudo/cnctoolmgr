@@ -19,12 +19,15 @@ function App() {
   };
 
   const exportVtdb = async () => {
-    if(selectedTools.length === 0) return;
-    
-    // Dynamically load sql.js from CDN to avoid WASM build issues
-    const SQL = await initSqlJs({
-      locateFile: file => `https://sql.js.org/dist/${file}`
-    });
+    try {
+      if(selectedTools.length === 0) {
+        alert("Your cart is empty! Please add tools to your cart before exporting.");
+        return;
+      }
+      
+      const SQL = await initSqlJs({
+        locateFile: file => `/${file}`
+      });
     
     const db = new SQL.Database();
     
@@ -75,10 +78,14 @@ function App() {
     const data = db.export();
     const blob = new Blob([data], { type: 'application/octet-stream' });
     const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `exported_tools_${Date.now()}.vtdb`;
-    a.click();
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `exported_tools_${Date.now()}.vtdb`;
+      a.click();
+    } catch(err) {
+      console.error(err);
+      alert(`Export Error: ${err.message}`);
+    }
   };
 
   return (
