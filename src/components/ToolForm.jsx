@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 export default function ToolForm({ onAdd, overrideData }) {
   const [formData, setFormData] = useState({
+    toolName: '',
     manufacturer: '',
     notes: '',
     toolType: '1',
@@ -48,9 +49,15 @@ export default function ToolForm({ onAdd, overrideData }) {
     <div className="glass-panel" style={{ height: '600px', display: 'flex', flexDirection: 'column' }}>
       <h2>Build Custom Tool</h2>
       <div style={{ overflowY: 'auto', flex: 1, paddingRight: '0.5rem', marginBottom: '1rem' }}>
-        <div className="form-group">
-          <label>Manufacturer</label>
-          <input type="text" name="manufacturer" value={formData.manufacturer} onChange={handleChange} placeholder="e.g. Whiteside, Amana..." />
+        <div className="grid-2">
+          <div className="form-group">
+            <label>Tool Name</label>
+            <input type="text" name="toolName" value={formData.toolName} onChange={handleChange} placeholder="e.g. 1/4 inch Upcut..." />
+          </div>
+          <div className="form-group">
+            <label>Manufacturer</label>
+            <input type="text" name="manufacturer" value={formData.manufacturer} onChange={handleChange} placeholder="e.g. Whiteside..." />
+          </div>
         </div>
         <div className="grid-2">
           <div className="form-group">

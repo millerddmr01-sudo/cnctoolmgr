@@ -52,7 +52,7 @@ function App() {
         const cutId = crypto.randomUUID();
         const treeId = crypto.randomUUID();
         
-        let toolName = tool.display_name;
+        let toolName = tool.toolName || tool.display_name;
         if (!toolName) {
             const unitsText = (tool.geometryUnits === '0' || tool.geometryUnits === 0) ? 'in' : 'mm';
             const prefix = tool.manufacturer ? tool.manufacturer : 'Custom';
